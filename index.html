@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>TOH</title>
-    <link rel="stylesheet" href="./styling.css">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/skeleton.css">
+    <link rel="stylesheet" href="./css/styling.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="./js/Stack.js"></script>
     <script type="text/javascript" src="./js/Puzzle.js"></script>
@@ -15,12 +17,16 @@
     <input type="number" id="delay" placeholder="Delay in Milliseconds">
     <button onClick="setupSimulation('human')">Generate Puzzle</button>
     <button onClick="setupSimulation('ai')">Solve</button>
+    <button onClick="setupSimulation('ai')">Solve Quickly</button>
     <br /><br />
-    <span>Stack A</span>
-    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack1" class="stack"></div>
-    <span>Stack B</span>
-    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack2" class="stack"></div>
-    <span>Stack C</span>
-    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack"></div>
+    <span class="three columns">Stack A
+      <span ondrop='drop(event)' ondragover='allowDrop(event)' id="stack1" class="stack"></span>
+    </span>
+    <span class="three columns">Stack B
+      <span ondrop='drop(event)' ondragover='allowDrop(event)' id="stack2" class="stack"></span>
+    </span>
+    <span class="three columns">Stack C
+      <span ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack"></span>
+    </span>
   </body>
 </html>

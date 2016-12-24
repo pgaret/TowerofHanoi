@@ -4,16 +4,16 @@ class Puzzle {
     this.currently_dragged = null
     this.delay = $("#delay")[0].value
     this.counter = 0
-    if (num <= 0) {
+    if (num <= 0 || num > 54) {
       console.log('Why would you do such a thing.')
     }
     else {
       this.board[0].current_set.push(1)
-      $("#stack1").append("<span draggable='true' id='1' ondragstart='drag(event)'>1</span>")
+      $("#stack1").append("<p draggable='true' id='1' ondragstart='drag(event)'>1</p>")
       if (num > 1){
         for (let i = 2; i < num; i++) {
           this.board[0].current_set.push(i)
-          let txt = "<span id="+i+" draggable='false' ondragstart='drag(event)'> "+i.toString()+" </span>"
+          let txt = "<p id="+i+" draggable='false' ondragstart='drag(event)'> "+i.toString()+" </p>"
           $("#stack1").append(txt)
         }
       }
@@ -42,8 +42,10 @@ class Puzzle {
     toStack.add_item(fromStack.top_item())
     fromStack.remove_item()
     $(fromStack.id).children()[0].remove()
-    let txt = "<span id="+toStack.top_item()+" draggable='true' ondragstart='drag(event)'> "+toStack.top_item().toString()+" </span>"
+    let txt = "<p id="+toStack.top_item()+" draggable='true' ondragstart='drag(event)'> "+toStack.top_item().toString()+" </p>"
+    console.log(toStack.top_item().toString())
     $(toStack.id).prepend(txt)
+    console.log(this.counter)
   }
 
   find_stack_by_id(id){
