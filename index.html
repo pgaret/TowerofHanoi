@@ -11,9 +11,9 @@
   </head>
   <body>
     <h1>Tower of Hanoi</h1>
-    <button onClick="testSim()">Test</button>
     <input type="text" id="size" placeholder="Starting Height">
-    <button onClick="setupSimulation()">Generate Puzzle</button>
+    <button onClick="setupSimulation('human')">Generate Puzzle</button>
+    <button onClick="setupSimulation('ai')">Solve</button>
     <br /><br />
     <span>Stack A</span>
     <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack1" class="stack"></div>

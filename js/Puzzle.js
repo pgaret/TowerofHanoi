@@ -37,6 +37,7 @@ class Puzzle {
   }
 
   moveItem(fromStack, toStack){
+    console.log("Moving "+fromStack.top_item()+" from "+fromStack.id+" to "+toStack.id)
     toStack.add_item(fromStack.top_item())
     fromStack.remove_item()
     $(fromStack.id).children()[0].remove()
@@ -59,6 +60,11 @@ class Puzzle {
         return this.board[i]
       }
     }
+  }
+
+  selfSolve(){
+    // debugger
+    this.moveTower(this.board[0].current_set.length, this.board[0], this.board[2], this.board[1])
   }
 
   clear_stacks(){
