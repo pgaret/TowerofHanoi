@@ -6,19 +6,20 @@
     <link rel="stylesheet" href="./styling.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="./js/Stack.js"></script>
+    <script type="text/javascript" src="./js/Puzzle.js"></script>
     <script type="text/javascript" src="./js/app.js"></script>
   </head>
   <body>
     <h1>Tower of Hanoi</h1>
     <button onClick="testSim()">Test</button>
-    <input type="text" id="size" placeholder="Stack Size">
-    <button onClick="setupSimulation()">Run Sim</button>
+    <input type="text" id="size" placeholder="Starting Height">
+    <button onClick="setupSimulation()">Generate Puzzle</button>
     <br /><br />
-    <span>Stack 1</span>
-    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack1" class="stack">Drag Here</div>
-    <span>Stack 2</span>
-    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack2" class="stack">Drag Here</div>
-    <span>Stack 3</span>
-    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack">Drag Here</div>
+    <span>Stack A</span>
+    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack1" class="stack"></div>
+    <span>Stack B</span>
+    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack2" class="stack"></div>
+    <span>Stack C</span>
+    <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack"></div>
   </body>
 </html>
