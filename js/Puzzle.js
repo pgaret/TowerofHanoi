@@ -2,6 +2,10 @@ class Puzzle {
   constructor(num){
     this.board = [new Stack("#stack1"), new Stack("#stack2"), new Stack("#stack3")]
     this.currently_dragged = null
+    this.delay = $("#delay")[0].value
+    console.log(this.delay)
+    this.counter = 0
+    this.sleep_timer = new Date().getTime()
     if (num <= 0) {
       console.log('Why would you do such a thing.')
     }
@@ -29,15 +33,18 @@ class Puzzle {
   }
 
   moveTower(height, fromStack, toStack, withStack){
+    // debugger
     if (height >= 1) {
       this.moveTower(height - 1, fromStack, withStack, toStack)
-      this.moveItem(fromStack, toStack)
+      console.log("Moving "+fromStack.top_item()+" from "+fromStack.id+" to "+toStack.id+" in "+(this.counter*this.delay).toString()+" ms!")
+      setTimeout(()=>{this.moveItem(fromStack, toStack)}, this.counter*this.delay)
+      this.counter += 1
       this.moveTower(height - 1, withStack, toStack, fromStack)
     }
   }
 
   moveItem(fromStack, toStack){
-    console.log("Moving "+fromStack.top_item()+" from "+fromStack.id+" to "+toStack.id)
+    // debugger
     toStack.add_item(fromStack.top_item())
     fromStack.remove_item()
     $(fromStack.id).children()[0].remove()
@@ -63,7 +70,6 @@ class Puzzle {
   }
 
   selfSolve(){
-    // debugger
     this.moveTower(this.board[0].current_set.length, this.board[0], this.board[2], this.board[1])
   }
 
