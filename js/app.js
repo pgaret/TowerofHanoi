@@ -17,12 +17,13 @@ function drop(event){
   boardSwap(event)
 }
 
-function setupSimulation(mode){
+function setupSimulation(mode, speed){
   if (game){
     game.clear_stacks()
   }
   let stack_size = parseFloat($("#size")[0].value) + 1
   game = new Puzzle(stack_size)
+  game.delay = speed
   if (mode !== 'human'){
     game.selfSolve()
   }

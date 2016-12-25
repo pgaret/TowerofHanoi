@@ -13,20 +13,28 @@
   </head>
   <body>
     <h1>Tower of Hanoi</h1>
-    <input type="number" id="size" placeholder="Starting Height">
-    <input type="number" id="delay" placeholder="Delay in Milliseconds">
-    <button onClick="setupSimulation('human')">Generate Puzzle</button>
-    <button onClick="setupSimulation('ai')">Solve</button>
-    <button onClick="setupSimulation('ai')">Solve Quickly</button>
-    <br /><br />
-    <span class="three columns">Stack A
-      <span ondrop='drop(event)' ondragover='allowDrop(event)' id="stack1" class="stack"></span>
-    </span>
-    <span class="three columns">Stack B
-      <span ondrop='drop(event)' ondragover='allowDrop(event)' id="stack2" class="stack"></span>
-    </span>
-    <span class="three columns">Stack C
-      <span ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack"></span>
-    </span>
+    <div id="input_form">
+      <input type="number" id="size" placeholder="Starting Height">
+      <!-- <input type="number" id="delay" placeholder="Delay in Milliseconds"> -->
+      <button onClick="setupSimulation('human')">Generate Puzzle</button>
+      <button onClick="setupSimulation('ai', 500)">Solve</button>
+      <button onClick="setupSimulation('ai', 50)">Solve Quickly</button>
+    </div>
+    <div id="simulation">
+      <span class="two columns offset-by-two column">To Play:
+        <br>Move the entire contents of stack A to stack B following these rules:
+        <ul><br><li>Only one disk can be moved at a time</li>
+        <li>Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack i.e. a disk can only be moved if it is the uppermost disk on a stack</li>
+        <li>No disk may be placed on top of a smaller disk</li></ul></span>
+      <span class="two columns">Stack A
+        <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack1" class="stack"></div>
+      </span>
+      <span class="two columns">Stack B
+        <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack2" class="stack"></div>
+      </span>
+      <span class="two columns">Stack C
+        <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack"></div>
+      </span>
+    </div>
   </body>
 </html>
