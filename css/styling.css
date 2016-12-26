@@ -16,8 +16,12 @@ h1{
 }
 
 .stack{
-  height: 100%;
   border-width: thin;
   border-style: solid;
   padding-bottom: 5%;
+}
+
+#moves{
+  height: 300px;
+  overflow: scroll;
 }

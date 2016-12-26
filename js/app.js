@@ -25,9 +25,11 @@ function drop(event){
 function setupSimulation(mode, speed){
   if (game){
     game.clear_stacks()
+    game.clear_moves()
+    clearMoveHistory()
   }
   $("#counter").text("Move Counter: 0")
-  let stack_size = parseFloat($("#size")[0].value) + 1
+  let stack_size = parseFloat($("#size")[0].value)
   game = new Puzzle(stack_size)
   game.delay = speed
   if (mode !== 'human'){
@@ -43,4 +45,9 @@ function pauseSimulation(){
 //When the user moves a piece, adjust the board accordingly
 function boardSwap(event){
   game.makeMove(event.target.id)
+}
+
+//Allow the user to prevent history from overwhelming everything
+function clearMoveHistory(){
+  $("#moves").empty()
 }

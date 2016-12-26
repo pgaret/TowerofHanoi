@@ -23,15 +23,16 @@ class Stack {
   //Id's of numbers correspond to id's of DOM so we can go ahead and change draggable attrs
   add_item(num){
     this.current_set.unshift(num)
-    $("#"+this.current_set[0]).attr("draggable", "true")
-    $("#"+this.current_set[1]).attr("draggable", "false")
+    $("#"+this.current_set[0]).attr({draggable: true, borderstyle: 'none'})
+    $("#"+this.current_set[1]).attr({draggable: true, borderstyle: 'none'})
   }
 
   //Removes item from the front, sets first element to draggable true
   //Don't have to worry about the lost element, it's taken care of above
   remove_item(){
+    $("#"+this.current_set[0]).attr({draggable: true, borderstyle: 'none'})
     this.current_set.splice(0, 1)
-    $("#"+this.current_set[0]).attr("draggable", "true")
+    $("#"+this.current_set[0]).attr({draggable: true, borderstyle: 'none'})
   }
 
   //Returns the top item

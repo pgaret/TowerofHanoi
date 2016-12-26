@@ -17,14 +17,15 @@
     <div id="input_form">
       <input type="number" id="size" placeholder="Starting Height">
       <button onClick="setupSimulation('human')">Generate Puzzle</button>
-      <button onClick="setupSimulation('ai', 500)">Solve</button>
-      <button onClick="setupSimulation('ai', 50)">Solve Quickly</button>
+      <button onClick="setupSimulation('ai', 500)">Slow</button>
+      <button onClick="setupSimulation('ai', 150)">Medium</button>
+      <button onClick="setupSimulation('ai', 1)">Fast</button>
       <button id="pause" onClick="pauseSimulation()">Pause</button>
       <button id="start" onClick="pauseSimulation()">Start</button>
     </div>
     <div id="simulation">
-      <span class="two columns offset-by-two column">To Play:
-        <br>Move the entire contents of stack A to stack B following these rules:
+      <span class="two columns offset-by-one column">To Play:
+        <br>Move the contents of stack A to another stack following these rules:
         <ul><br><li>Only one disk can be moved at a time</li>
         <li>Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack i.e. a disk can only be moved if it is the uppermost disk on a stack</li>
         <li>No disk may be placed on top of a smaller disk</li></ul></span>
@@ -37,8 +38,12 @@
       <span class="two columns">Stack C
         <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack"></div>
       </span>
-      <span id="counter" class="two columns">
-      </span>
+      <div class="two columns">
+      <div id="counter">Move Count: 0
+      </div>
+      <button onClick="clearMoveHistory()">Clear History</button>
+      <div id="moves">Move History:
+      </div>
     </div>
   </body>
 </html>
