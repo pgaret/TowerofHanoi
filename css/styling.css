@@ -1,3 +1,5 @@
+
+/*Not much to say in here - keep things centered, set up borders for the stacks*/
 h1{
   padding-top: 2.5%;
   text-align: center;
@@ -17,4 +19,5 @@ h1{
   height: 100%;
   border-width: thin;
   border-style: solid;
+  padding-bottom: 5%;
 }

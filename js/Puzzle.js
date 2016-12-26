@@ -1,12 +1,19 @@
+//Manages the game board as a whole
 class Puzzle {
   constructor(num){
+    //The board itself, composed of the 3 stacks
     this.board = [new Stack("#stack1"), new Stack("#stack2"), new Stack("#stack3")]
+    //Keeps track of which piece is being dragged, since doing so via events isn't easy
     this.currently_dragged = null
-    // this.delay = $("#delay")[0].value
-    this.counter = 0
+    this.paused = false
+    //Keeps track of how many moves have happened, used both for move counter and timing
+    this.counter = 1
+    //Edge cases
     if (num <= 0 || num > 54) {
       console.log('Why would you do such a thing.')
     }
+    //Creates the initial stack - all but the first are not draggable
+    //Using font-size as a convenient visual to replicate the rings
     else {
       this.board[0].current_set.push(1)
       $("#stack1").append("<p draggable='true' style='font-size:12px' id='1' ondragstart='drag(event)'>1</p>")
@@ -20,31 +27,47 @@ class Puzzle {
     }
   }
 
+  //Before we allow the user to drop a ring, make sure it's a valid spot
   allowMove(toStack){
     return this.find_stack_by_id(toStack).can_be_added(this.currently_dragged) ? true : false
   }
 
+  //Find the stack that's been dropped on by id, then move the dropped item
   makeMove(toStackId) {
     this.moveItem(this.find_stack_by_contents(this.currently_dragged),
         this.find_stack_by_id(toStackId))
   }
 
+  //The recursive algorithm that drives everything else
+  //Addressed more thoroughly in the ReadMe
   moveTower(height, fromStack, toStack, withStack){
     if (height >= 1) {
       this.moveTower(height - 1, fromStack, withStack, toStack)
-      setTimeout(()=>{this.moveItem(fromStack, toStack)}, this.counter*this.delay)
+      let counter = JSON.parse(JSON.stringify(this.counter))
+      setTimeout(()=>{this.moveItem(fromStack, toStack, counter)}, this.counter*this.delay)
       this.counter += 1
       this.moveTower(height - 1, withStack, toStack, fromStack)
     }
   }
 
-  moveItem(fromStack, toStack){
-    toStack.add_item(fromStack.top_item())
-    fromStack.remove_item()
-    // console.log($(fromStack.id).children()[0])
-    $(toStack.id).prepend($(fromStack.id).children()[0])
+  //If we're not currently paused, move the item
+  //This comes in three parts:
+  //  1. Add the top fromStack item to toStack then remove it from fromStack
+  //  2. Change the first child of fromStack's parent to toStack
+  //  3. Update the move counter since a successful move has occurred
+  moveItem(fromStack, toStack, thisMoveCounter){
+    if (this.paused === true){
+      setTimeout(()=>{this.moveItem(fromStack, toStack)}, 1)
+    }
+    else {
+      toStack.add_item(fromStack.top_item())
+      fromStack.remove_item()
+      $(toStack.id).prepend($(fromStack.id).children()[0])
+      $("#counter").text("Move Counter: "+thisMoveCounter)
+    }
   }
 
+  //Helper method that finds the stack that is tied to a stackID
   find_stack_by_id(id){
     id = "#"+id
     for (let i = 0; i < this.board.length; i++){
@@ -54,6 +77,7 @@ class Puzzle {
     }
   }
 
+  //Helper method that finds the stack that includes a given number
   find_stack_by_contents(num){
     for (let i = 0; i < this.board.length; i++){
       if (this.board[i].current_set.includes(num)){
@@ -62,10 +86,12 @@ class Puzzle {
     }
   }
 
+  //Runs the solution algorithm
   selfSolve(){
     this.moveTower(this.board[0].current_set.length, this.board[0], this.board[2], this.board[1])
   }
 
+  //Clears everything - both the DOM stacks and the board stacks
   clear_stacks(){
     this.board.forEach(stack=>{
       $(stack.id).empty()

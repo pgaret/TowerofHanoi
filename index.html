@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>TOH</title>
+    <!-- Using Skeleton for visual framework (think Bootstrap Lite) -->
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/skeleton.css">
     <link rel="stylesheet" href="./css/styling.css">
@@ -15,10 +16,11 @@
     <h1>Tower of Hanoi</h1>
     <div id="input_form">
       <input type="number" id="size" placeholder="Starting Height">
-      <!-- <input type="number" id="delay" placeholder="Delay in Milliseconds"> -->
       <button onClick="setupSimulation('human')">Generate Puzzle</button>
       <button onClick="setupSimulation('ai', 500)">Solve</button>
       <button onClick="setupSimulation('ai', 50)">Solve Quickly</button>
+      <button id="pause" onClick="pauseSimulation()">Pause</button>
+      <button id="start" onClick="pauseSimulation()">Start</button>
     </div>
     <div id="simulation">
       <span class="two columns offset-by-two column">To Play:
@@ -34,6 +36,8 @@
       </span>
       <span class="two columns">Stack C
         <div ondrop='drop(event)' ondragover='allowDrop(event)' id="stack3" class="stack"></div>
+      </span>
+      <span id="counter" class="two columns">
       </span>
     </div>
   </body>
