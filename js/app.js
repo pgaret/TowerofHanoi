@@ -20,8 +20,8 @@ function drop(event){
 }
 //-------------------------------------------------------//
 
-//Basic setup (solve manually or auto, how long between moves,
-//how large is the starting stack?)
+//Determines what user input should result in
+//Primary questions: is there a game, has height changed, is that game over, is that game paused
 function setupSimulation(mode, speed){
   let stack_size = parseFloat($("#size")[0].value)
   // debugger
@@ -54,7 +54,6 @@ function setupSimulation(mode, speed){
   }
   game.delay = speed
 
-  $("#counter").text("Move Counter: 0")
 }
 
 //When the user moves a piece, adjust the board accordingly
@@ -67,12 +66,14 @@ function clearMoveHistory(){
   $("#moves").empty()
 }
 
+//Pauses the sim and displays the play button
 function pause(){
   game.paused = true
   $("#play").css("visibility", "visible")
   $("#pause").css("visibility", "hidden")
 }
 
+//Restarts the sim and displays the pause button
 function play(){
   game.paused = false
   $("#play").css("visibility", "hidden")

@@ -102,9 +102,8 @@ class Puzzle {
     }
   }
 
-  //Runs the solution algorithm
+  //Runs the solution algorithm then plays out the game
   selfSolve(){
-    // debugger
     this.moveTower(this.board[0].current_set.length, this.board[0], this.board[2], this.board[1])
     this.playOutGame()
   }
