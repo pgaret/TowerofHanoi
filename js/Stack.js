@@ -11,12 +11,7 @@ class Stack {
   //whether to allow a user to drop their dragged ring in a given location
   can_be_added(num){
     //Math.min.apply(Math, arr) finds the minimum element of an array
-    if (Math.min.apply(Math, this.current_set) > num){
-      return true
-    }
-    else {
-      return false
-    }
+    return Math.min.apply(Math, this.current_set) > num ? true : false
   }
 
   //Adds an item to the stack

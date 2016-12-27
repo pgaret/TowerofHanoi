@@ -1,5 +1,12 @@
-
 /*Not much to say in here - keep things centered, set up borders for the stacks*/
+
+#pause{
+  visibility: collapse;
+}
+#play{
+  visibility: collapse;
+}
+
 h1{
   padding-top: 2.5%;
   text-align: center;

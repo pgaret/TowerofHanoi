@@ -23,23 +23,38 @@ function drop(event){
 //Basic setup (solve manually or auto, how long between moves,
 //how large is the starting stack?)
 function setupSimulation(mode, speed){
-  if (game){
-    game.clear_stacks()
-    game.clear_moves()
-    clearMoveHistory()
-  }
-  $("#counter").text("Move Counter: 0")
   let stack_size = parseFloat($("#size")[0].value)
-  game = new Puzzle(stack_size)
-  game.delay = speed
-  if (mode !== 'human'){
-    game.selfSolve()
+  // debugger
+  if (!!game){
+    if (stack_size === game.total){
+      if (game.current === game.all_moves.length){
+        game.clear_stacks()
+        clearMoveHistory()
+        game = new Puzzle(stack_size)
+      }
+      else {
+        game.paused = false
+        $("#play").css("visibility", "hidden")
+        $("#pause").css("visibility", "visible")
+        game.playOutGame()
+      }
+    }
+    else{
+      game.clear_stacks()
+      clearMoveHistory()
+      game = new Puzzle(stack_size)
+    }
   }
-}
+  else {
+    game = new Puzzle(stack_size)
+  }
+  if (mode === 'ai' && game.all_moves.length === 0){
+    game.selfSolve()
+    $("#pause").css("visibility", "visible")
+  }
+  game.delay = speed
 
-//If the user pauses the simulation, tell the puzzle to act accordingly
-function pauseSimulation(){
-  game.paused = !game.paused
+  $("#counter").text("Move Counter: 0")
 }
 
 //When the user moves a piece, adjust the board accordingly
@@ -50,4 +65,17 @@ function boardSwap(event){
 //Allow the user to prevent history from overwhelming everything
 function clearMoveHistory(){
   $("#moves").empty()
+}
+
+function pause(){
+  game.paused = true
+  $("#play").css("visibility", "visible")
+  $("#pause").css("visibility", "hidden")
+}
+
+function play(){
+  game.paused = false
+  $("#play").css("visibility", "hidden")
+  $("#pause").css("visibility", "visible")
+  game.playOutGame()
 }

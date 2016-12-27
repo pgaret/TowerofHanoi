@@ -17,11 +17,12 @@
     <div id="input_form">
       <input type="number" id="size" placeholder="Starting Height">
       <button onClick="setupSimulation('human')">Generate Puzzle</button>
-      <button onClick="setupSimulation('ai', 500)">Slow</button>
-      <button onClick="setupSimulation('ai', 150)">Medium</button>
-      <button onClick="setupSimulation('ai', 1)">Fast</button>
-      <button id="pause" onClick="pauseSimulation()">Pause</button>
-      <button id="start" onClick="pauseSimulation()">Start</button>
+      <span><b>Solve: </b></span>
+      <button class="speed" onClick="setupSimulation('ai', 750)">Slow</button>
+      <button class="speed" onClick="setupSimulation('ai', 150)">Medium</button>
+      <button class="speed" onClick="setupSimulation('ai', 1)">Fast</button>
+      <button id="pause" onClick="pause()">Pause</button>
+      <button id="play" onClick="play()">Play</button>
     </div>
     <div id="simulation">
       <span class="two columns offset-by-one column">To Play:

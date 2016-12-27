@@ -9,9 +9,13 @@ class Puzzle {
     this.total = num
     //Keeps track of which piece is being dragged, since doing so via events isn't easy
     this.currently_dragged = null
-    this.paused = false
     //Keeps track of how many moves have happened, used both for move counter and timing
     this.counter = 1
+    //If paused, this will be true
+    this.paused = false
+    //All moves tied to this game
+    this.all_moves = []
+    this.current = 0
     //Edge cases
     if (num <= 0 || num > 54 || !num) {
       console.log('Why would you do such a thing.')
@@ -48,40 +52,34 @@ class Puzzle {
     if (height >= 1) {
       this.moveTower(height - 1, fromStack, withStack, toStack)
       let counter = JSON.parse(JSON.stringify(this.counter))
-      this.upcoming_moves.push(setTimeout(()=>{this.moveItem(fromStack, toStack, counter)}, this.counter*this.delay))
+      this.all_moves.push([fromStack, toStack, this.counter])
       this.counter += 1
       this.moveTower(height - 1, withStack, toStack, fromStack)
     }
   }
 
-  //If we're not currently paused, move the item
-  //This comes in three parts:
+  //Move the item, in three parts:
   //  1. Add the top fromStack item to toStack then remove it from fromStack
   //  2. Change the first child of fromStack's parent to toStack
   //  3. Update the move counter since a successful move has occurred
   moveItem(fromStack, toStack, thisMoveCounter){
-    if (this.paused === true){
-      setTimeout(()=>{this.moveItem(fromStack, toStack)}, Math.abs(thisMoveCounter - this.counter)*this.delay)
+    toStack.add_item(fromStack.top_item())
+    fromStack.remove_item()
+    $(toStack.id).prepend($(fromStack.id).children()[0])
+    if (thisMoveCounter) {
+      $("#counter").text("Move Counter: "+thisMoveCounter)
     }
     else {
-      toStack.add_item(fromStack.top_item())
-      fromStack.remove_item()
-      $(toStack.id).prepend($(fromStack.id).children()[0])
-      if (thisMoveCounter) {
-        $("#counter").text("Move Counter: "+thisMoveCounter)
-      }
-      else {
-        $("#counter").text("Move Counter: "+this.counter)
-        this.counter += 1
-      }
-      $("#moves").prepend("<div>"+toStack.top_item()+" from "+fromStack.id+" to "+toStack.id+"</div>")
-      $(fromStack.id).css("background-color", "white")
-      if (toStack.current_set.length === this.total){
-        $(toStack.id).css("background-color", "lightgreen")
-      }
-      else {
-        $(toStack.id).css("background-color", "white")
-      }
+      $("#counter").text("Move Counter: "+this.counter)
+      this.counter += 1
+    }
+    $("#moves").prepend("<div>"+toStack.top_item()+" from "+fromStack.id+" to "+toStack.id+"</div>")
+    $(fromStack.id).css("background-color", "white")
+    if (toStack.current_set.length === this.total){
+      $(toStack.id).css("background-color", "lightgreen")
+    }
+    else {
+      $(toStack.id).css("background-color", "white")
     }
   }
 
@@ -106,7 +104,26 @@ class Puzzle {
 
   //Runs the solution algorithm
   selfSolve(){
+    // debugger
     this.moveTower(this.board[0].current_set.length, this.board[0], this.board[2], this.board[1])
+    this.playOutGame()
+  }
+
+  //Plays the last stored game from the last saved spot
+  playOutGame(){
+    setTimeout(function render(){
+      if (game.all_moves[game.current][0].top_item() !== undefined){
+        game.moveItem(game.all_moves[game.current][0], game.all_moves[game.current][1], game.all_moves[game.current][2])
+        game.current += 1
+        if (game.current === game.all_moves.length){
+          $("#pause").css("visibility", "hidden")
+          $("#play").css("visibility", "hidden")
+        }
+        if (game.current < game.all_moves.length && game.paused !== true){
+          setTimeout(render, game.delay)
+        }
+      }
+    }, game.delay)
   }
 
   //Clears everything - both the DOM stacks and the board stacks
@@ -115,12 +132,5 @@ class Puzzle {
       $(stack.id).empty().css("background-color", "white")
       stack.empty()
     })
-  }
-
-  //Clears out all timeouts
-  clear_moves(){
-    for (let i = 0; i < this.upcoming_moves.length; i++){
-      clearTimeout(this.upcoming_moves[i])
-    }
   }
 }
