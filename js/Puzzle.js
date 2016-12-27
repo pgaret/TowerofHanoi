@@ -48,13 +48,13 @@ class Puzzle {
 
   //The recursive algorithm that drives everything else
   //Addressed more thoroughly in the ReadMe
-  moveTower(height, fromStack, toStack, withStack){
+  moveStack(height, fromStack, toStack, withStack){
     if (height >= 1) {
-      this.moveTower(height - 1, fromStack, withStack, toStack)
+      this.moveStack(height - 1, fromStack, withStack, toStack)
       let counter = JSON.parse(JSON.stringify(this.counter))
       this.all_moves.push([fromStack, toStack, this.counter])
       this.counter += 1
-      this.moveTower(height - 1, withStack, toStack, fromStack)
+      this.moveStack(height - 1, withStack, toStack, fromStack)
     }
   }
 
@@ -104,7 +104,7 @@ class Puzzle {
 
   //Runs the solution algorithm then plays out the game
   selfSolve(){
-    this.moveTower(this.board[0].current_set.length, this.board[0], this.board[2], this.board[1])
+    this.moveStack(this.board[0].current_set.length, this.board[0], this.board[2], this.board[1])
     this.playOutGame()
   }
 
