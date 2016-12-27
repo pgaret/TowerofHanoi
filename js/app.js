@@ -32,12 +32,6 @@ function setupSimulation(mode, speed){
         clearMoveHistory()
         game = new Puzzle(stack_size)
       }
-      else {
-        game.paused = false
-        $("#play").css("visibility", "hidden")
-        $("#pause").css("visibility", "visible")
-        game.playOutGame()
-      }
     }
     else{
       game.clear_stacks()
