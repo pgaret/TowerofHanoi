@@ -75,7 +75,7 @@ class Puzzle {
     }
     $("#moves").prepend("<div>"+toStack.top_item()+" from "+fromStack.id+" to "+toStack.id+"</div>")
     $(fromStack.id).css("background-color", "white")
-    if (toStack.current_set.length === this.total){
+    if (toStack.current_set.length === this.total && toStack !== this.board[0]){
       $(toStack.id).css("background-color", "lightgreen")
     }
     else {
